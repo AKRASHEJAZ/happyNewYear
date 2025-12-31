@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Happy New Year 🎮</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
 <style>
 :root {
   --bg: #0b1020;
@@ -19,8 +17,7 @@
 body {
   margin: 0;
   min-height: 100svh;
-  background:
-    radial-gradient(circle at bottom, #10183a, var(--bg));
+  background: radial-gradient(circle at bottom, #10183a, var(--bg));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,13 +40,11 @@ canvas {
   max-width: 360px;
   background: rgba(0,0,0,0.25);
   border: 4px solid #2a3470;
-  box-shadow:
-    0 0 0 4px #000,
-    0 0 20px rgba(255,214,90,.4);
+  box-shadow: 0 0 0 4px #000, 0 0 20px rgba(255,214,90,.4);
 }
 
 h1 {
-  font-size: 1.2rem;
+  font-size: 1.8rem; /* larger font */
   line-height: 1.6;
   color: #fff;
   text-shadow: 2px 2px 0 #000;
@@ -57,15 +52,13 @@ h1 {
 
 .year {
   margin: 16px 0;
-  font-size: 2rem;
+  font-size: 2.8rem; /* larger font */
   color: var(--gold);
-  text-shadow:
-    2px 2px 0 #000,
-    0 0 12px var(--gold);
+  text-shadow: 2px 2px 0 #000, 0 0 16px var(--gold);
 }
 
 .msg {
-  font-size: 0.7rem;
+  font-size: 0.9rem; /* slightly larger message */
   line-height: 1.8;
   opacity: .9;
 }
@@ -88,9 +81,8 @@ h1 {
   <h1>HAPPY NEW YEAR</h1>
   <div class="year">2026</div>
   <div class="msg">
-    PRESS START<br>
-    FOR A GREAT YEAR
-    <div class="blink">▮</div>
+    Wishing You A<br>
+    Great Start To a New Chapter
   </div>
 </div>
 
@@ -106,7 +98,7 @@ resize();
 addEventListener("resize", resize);
 
 // Pixel stars
-const stars = Array.from({ length: 120 }, () => ({
+const stars = Array.from({ length: 140 }, () => ({
   x: Math.random() * c.width,
   y: Math.random() * c.height,
   s: Math.random() > 0.8 ? 2 : 1
@@ -122,13 +114,15 @@ class PixelFirework {
     this.p = [];
   }
   explode() {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 48; i++) { // more particles
+      const angle = (Math.PI * 2 / 48) * i;
       this.p.push({
         x: this.x,
         y: this.y,
-        dx: Math.round(Math.cos(i) * 2),
-        dy: Math.round(Math.sin(i) * 2),
-        o: 1
+        dx: Math.round(Math.cos(angle) * 4), // larger spread
+        dy: Math.round(Math.sin(angle) * 4),
+        o: 1,
+        size: Math.random() > 0.7 ? 5 : 4 // bigger pixels
       });
     }
   }
@@ -148,11 +142,11 @@ class PixelFirework {
   draw() {
     ctx.fillStyle = "#ffd65a";
     if (!this.p.length) {
-      ctx.fillRect(this.x, this.y, 2, 6);
+      ctx.fillRect(this.x, this.y, 3, 9); // larger rocket
     } else {
       this.p.forEach(pt => {
         ctx.globalAlpha = pt.o;
-        ctx.fillRect(pt.x, pt.y, 2, 2);
+        ctx.fillRect(pt.x, pt.y, pt.size, pt.size);
       });
       ctx.globalAlpha = 1;
     }
@@ -168,7 +162,7 @@ function loop() {
   ctx.fillStyle = "#fff";
   stars.forEach(s => ctx.fillRect(s.x, s.y, s.s, s.s));
 
-  if (Math.random() < 0.03) fireworks.push(new PixelFirework());
+  if (Math.random() < 0.045) fireworks.push(new PixelFirework());
 
   fireworks.forEach((f, i) => {
     f.update();
